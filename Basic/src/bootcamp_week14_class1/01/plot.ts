@@ -10,7 +10,7 @@ const trace1: Partial<Plotly.PlotData> = {
 };
 
 // define the layout
-const layout: Partial<Plotly.Layout> = {
+const layout1: Partial<Plotly.Layout> = {
     title: { text: 'My Plot' },
     xaxis: {
         title: { text: 'X Axis' },
@@ -22,4 +22,32 @@ const layout: Partial<Plotly.Layout> = {
 
 
 // call the Plotly function to create the plot
-Plotly.newPlot("plot", [trace1], layout)
+Plotly.newPlot("plot", [trace1], layout1)
+
+
+// the second plot:
+let Name: string = 'Travis Taylor';
+
+let title: string = `${Name}'s First Plotly Chart`;
+
+let books: string[] = ["The Visual Display of Quantitative Information", "Automate the Boring Stuff", "Data Science from Scratch"];
+
+let timesRead: number[] = [100, 50, 25];
+
+
+// Assign `x` and `y` values for the Plotly trace object
+const trace2: Partial<Plotly.PlotData> = {
+    x: books,
+    y: timesRead,
+    type: 'bar'
+};
+
+// Leave the code below unchanged
+
+const data = [trace2];
+
+const layout2: Partial<Plotly.Layout> = {
+    title: {text : title}
+};
+
+Plotly.newPlot("plot2", data, layout2);

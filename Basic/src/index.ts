@@ -1,12 +1,6 @@
 console.log('Happy developing ✨')
 
 
-function helloWorld (str: string) {
-    return 'hello, ' + str
-}
-
-console.log(helloWorld('ts'))
-
 // TS static type checking
 let isEnabled: boolean = true
 let course: string = 'TypeScript'
@@ -140,7 +134,7 @@ const myCar: ReadonlyCar = {
 myCar.make = "Honda"
 console.log(myCar.make);
 
-//
+// make it dynamic - you can use index signatures to allow additional properties
 interface dynamicObject {
     readonly name: string;
     time?: number;
@@ -186,5 +180,51 @@ function startCourse(cls: Class3) {
     }
     if ('startTime' in cls) {
         console.log(`Student ${cls.name} started at ${cls.startTime}`);
+    }
+}
+
+// another example of union type
+let mixed: (string | number | boolean)[] = ['hello', 123, true, 'world', 456, false];
+mixed.push('new string');
+console.log(mixed)
+
+// optional praameters in functions
+let greet: Function
+greet = ():void => {
+    console.log('Hello, world!');
+}
+
+function greeting(name:string, age:number, occupation:string = "None", city?: string): string {
+    if (city) {
+        return `Hello ${name}, you are ${age} years old and live in ${city}.`;
+    } else {
+        return `Hello ${name}, you are ${age} years old.`;
+    }
+}
+
+//examples of using type
+type StrOrNum = string | number;
+type objWithName = {name:string, uid: StrOrNum};
+
+const logDetails = (uid: StrOrNum, item: string): void => {
+    console.log(`A ${item} with uid ${uid} has been added.`);
+}
+
+// function signatures - a way to define the type of a function
+// case 1
+let greet2: (a: string, b: string) => void;
+greet2 = (name: string, greeting: string): void => {
+    console.log(`${greeting}, ${name}!`);
+}
+
+// case 2
+let calc: (a: number, b: number, c: string) => number;
+calc = (num1: number, num2: number, operation: string): number => {
+    if (operation === 'add') {
+        return num1 + num2;
+    } else if (operation === 'subtract') {
+        return num1 - num2;
+    } else {
+        throw new Error('Invalid operation');
     }
 }
