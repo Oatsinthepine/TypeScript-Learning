@@ -169,3 +169,22 @@ type Course2 = Class2 & {
 let anyValue: any = 'hello world';
 let anyLength: number = (anyValue as string).length; // type assertion, tells TS to treat anyValue as a string
 console.log(anyLength);
+
+//
+interface teacher {
+    name: string,
+    course: string
+}
+interface student {
+    name: string,
+    startTime: Date
+}
+type Class3 = teacher | student; // union type, means that the variable can be either a teacher or a student
+function startCourse(cls: Class3) {
+    if ('course' in cls) {
+        console.log(`Teacher ${cls.name} is teaching ${cls.course}`);
+    }
+    if ('startTime' in cls) {
+        console.log(`Student ${cls.name} started at ${cls.startTime}`);
+    }
+}
