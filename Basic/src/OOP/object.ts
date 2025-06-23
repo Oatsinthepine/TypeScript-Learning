@@ -90,3 +90,44 @@ adminOne.listUsers();
 console.log(adminOne.name);
 adminOne.deleteUser(userTwo)
 adminOne.listUsers()
+
+//prototype inheritance
+function User(email:string, name:string, age?:number): void {
+    this.email = email;
+    this.name = name;
+    this.age = age;
+    this.online = false;
+    this.login = function() {
+        console.log(this.email, "has logged in.");
+        this.online = true;
+    }
+}
+
+User.prototype.login = function():void {
+    this.login = true;
+    console.log(this.email, "has logged in.");
+}
+
+function AdminUser (...args: any[]): void {
+    User.apply(this, args); // call the User constructor)
+    this.role = 'admin';
+    this.users = [];
+}
+
+
+AdminUser.prototype = Object.create(User.prototype); // inherit from User prototype
+
+// this method only available to AdminUser instances
+AdminUser.prototype.addUser = function(user: any): void {
+    this.users.push(user);
+}
+
+
+let newUser1: any = new User('user1@live.com', 'User1', 22);
+let newUser2: any = new User('user2@whatever.com', 'User2');
+let newAdmin: any = new AdminUser('admin@outlook.com', 'Admin', 30);
+
+console.log(newAdmin);
+
+newAdmin.addUser(newUser1)
+console.log(newAdmin.users);
