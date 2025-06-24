@@ -49,9 +49,12 @@ const list = new listTemplate(ul)
 form.addEventListener('submit', (e:SubmitEvent):any => {
     e.preventDefault();
 
+    let values : [string, string, number];
+    values = [tofrom.value, details.value, amount.valueAsNumber]
+
     let doc: hasFormatter;
     if (type.value === 'invoice') {
-        doc = new Invoice(tofrom.value, details.value, amount.valueAsNumber);
+        doc = new Invoice(...values);
     } else {
         doc = new Payment (tofrom.value, details.value, amount.valueAsNumber)
     }
@@ -72,7 +75,7 @@ interface IsPerson {
 
 const me: IsPerson = {
     name: "Jacky",
-    age: 24,
+    age: 34,
     speak(text:string): void {
         console.log(text)
     }
@@ -81,3 +84,63 @@ const me: IsPerson = {
 const greetPerson = (person: IsPerson): void => {
     console.log(`Hello ${person.name}, you are ${person.age} years old`);
 }
+
+
+// generics
+const addUID = <T extends object>(obj: T)=> {
+    let uid = Math.floor(Math.random()*100);
+    return {...obj, uid};
+}
+
+let docOne = addUID({name:"Mr.Unknown", age:36});
+console.log(docOne.name);
+
+// with interfaces
+interface Resource<T> {
+    uid: number;
+    resourceName: string;
+    data: T;
+}
+
+const docThree: Resource<object> = {
+    uid: 1,
+    resourceName: 'person',
+    data: {name: 'Jacky'}
+}
+
+const docFour: Resource<string[]> = {
+    uid: 2,
+    resourceName: 'shoppingList',
+    data: ['bread', 'milk', 'eggs']
+}
+
+console.log(docThree, docFour);
+
+// enums
+enum ResourceType {BOOK, AUTHOR, FILM, DIRECTOR, PERSON}
+
+interface Resources<T> {
+    uid: number,
+    resourceType: number,
+    data: T
+}
+
+const docOneEnum: Resources<object> = {
+    uid: 1,
+    resourceType: ResourceType.BOOK,
+    data: {title: "this is a title"}
+}
+
+const docTwoEnum: Resources<object> = {
+    uid: 3,
+    resourceType: ResourceType.DIRECTOR,
+    data: {name: "Mr.test"}
+}
+
+console.log(docOneEnum, docTwoEnum);
+
+
+// tuples
+let arr = ['Jacky', 60, true];
+
+let tup:[string, number, boolean]
